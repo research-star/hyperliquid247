@@ -40,6 +40,27 @@ python3 -m http.server 8000
 y abrir `http://localhost:8000`. También funciona publicado en GitHub
 Pages / Netlify / Vercel tal cual.
 
+## Embeber como pestaña en otra página (ej.: finanzasbo.com)
+
+`dist/mercado247-tab.js` es un bundle autocontenido (estilos namespaceados
+bajo `.m247` + markup + lógica) pensado para el patrón de tabs con
+lazy-render de FinanzasBo (`window.renderXxx`). No pisa ni hereda estilos
+del sitio anfitrión.
+
+```html
+<!-- 1. el contenedor de la tab -->
+<div id="tab-mercado247" data-mercado247></div>
+
+<!-- 2. el script (una sola vez, al final del body) -->
+<script src="mercado247-tab.js" defer></script>
+
+<!-- 3. al activar la tab (idempotente; la 1ª llamada monta y conecta) -->
+<script>/* dentro de activateTab('mercado247'): */ window.renderMercado247();</script>
+```
+
+Si la página no usa tabs, alcanza con `<div data-mercado247-auto></div>` y
+el script: se monta solo al cargar.
+
 ## Estructura
 
 ```
